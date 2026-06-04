@@ -6,18 +6,17 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-  const styleObject = {};
   const pairSplit = sourceString.split(';');
 
-  for (const pair of pairSplit) {
+  const styleObject = pairSplit.reduce((accumulator, pair) => {
     const [key, value] = pair.split(':');
 
-    if (value === undefined) {
-      continue;
+    if (value !== undefined) {
+      accumulator[key.trim()] = value.trim();
     }
 
-    styleObject[key.trim()] = value.trim();
-  }
+    return accumulator;
+  }, {});
 
   return styleObject;
 }
